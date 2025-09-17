@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.real_estate_application"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.3.13750724"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

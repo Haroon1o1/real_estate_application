@@ -106,9 +106,6 @@ class PosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
-
     return Container(
       // height: h * 0.5,
       // width: w * 0.8,

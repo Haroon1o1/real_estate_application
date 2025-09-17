@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:real_estate_application/screens/photoScreen/photo_screen.dart';
 import 'package:real_estate_application/screens/splash_screen/main_splash_screen.dart';
 
 void main() {

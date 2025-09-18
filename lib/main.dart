@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:real_estate_application/screens/HomeScreen/HomeScreen.dart';
 import 'package:real_estate_application/screens/details_screen/house_details_screen.dart';
 import 'package:real_estate_application/screens/details_screen/provider/house_detail_provider.dart';
 import 'package:real_estate_application/screens/photo_screen/photo_screen.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-        home: HouseDetailScreen(),
+        home: HomeScreen(),
       ),
     );
   }

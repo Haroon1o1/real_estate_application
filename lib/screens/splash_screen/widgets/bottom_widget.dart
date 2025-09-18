@@ -1,48 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:real_estate_application/screens/splash_screen/provider/Splash_provider.dart';
 import 'package:real_estate_application/screens/splash_screen/widgets/bottom_curve.dart';
 import 'package:real_estate_application/widgets/Custom_Button.dart';
 
-class SplashBottomWidget extends StatefulWidget {
+class SplashBottomWidget extends StatelessWidget {
   const SplashBottomWidget({super.key});
 
-  @override
-  State<SplashBottomWidget> createState() => _SplashBottomWidgetState();
-}
-
-class _SplashBottomWidgetState extends State<SplashBottomWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<Offset> _slideAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200));
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1), // start off-screen bottom
-      end: Offset.zero, // final position
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-
-    _controller.forward(); // start animation when widget builds
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return Align(
       alignment: Alignment.bottomCenter,
       child: SlideTransition(
-        position: _slideAnimation,
+        position: context.watch<SplashProvider>().slideAnimation,
         child: ClipPath(
           clipper: TopCurveClipper(),
           child: Container(
@@ -74,7 +48,7 @@ class _SplashBottomWidgetState extends State<SplashBottomWidget>
                   size: size.width * 0.035,
                   color: Colors.black,
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 CustomButton(
                   hasIcon: false,
                   height: 50,

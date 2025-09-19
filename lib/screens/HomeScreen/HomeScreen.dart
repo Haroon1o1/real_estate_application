@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:real_estate_application/screens/ChatScreen/Screens/AllChat.dart';
 import 'package:real_estate_application/screens/HomeScreen/provider/home_provider.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/FilterChipWidget.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/HouseCard.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/NavigationItem.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/SearchBarWidget.dart';
+import 'package:real_estate_application/screens/Profile/Profile.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -14,12 +16,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<HomeProvider>();
 
-    // 👇 Pages controlled by bottom nav
     final pages = [
       _buildHomePage(context, provider),
       Center(child: Text("Locations Page", style: GoogleFonts.poppins(fontSize: 18))),
-      Center(child: Text("Chat Page", style: GoogleFonts.poppins(fontSize: 18))),
-      Center(child: Text("Settings Page", style: GoogleFonts.poppins(fontSize: 18))),
+      AllChatScreen(),
+      SettingsScreen(),
     ];
 
     return SafeArea(
@@ -39,22 +40,20 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Image.asset("assets/icons/location.png", width: 24, color: Color(0xFF364856)),
                     SizedBox(width: 6),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xFF364856),
-                        ),
-                        child: Text(
-                          "Kochi, Keralahdkjhfkjdshkfhghghghjgjg",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF364856),
+                      ),
+                      child: Text(
+                        "Islamabad, Pakistan",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -66,14 +65,19 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Image.asset("assets/icons/notification.png", width: 26, color: Color(0xFF364856)),
                   SizedBox(width: 12),
-                  CircleAvatar(radius: 23, backgroundImage: AssetImage("assets/images/house1.jpg")),
+                  CircleAvatar(
+                    radius: 24,
+                    backgroundImage: NetworkImage(
+                      "https://randomuser.me/api/portraits/women/44.jpg",
+                    ),
+                  ),
                 ],
               ),
             ],
           ),
         ),
 
-        body: pages[provider.selectedNavIndex], // 👈 switch by bottom nav
+        body: pages[provider.selectedNavIndex],
 
         bottomNavigationBar: Container(
           margin: const EdgeInsets.all(12),
@@ -99,9 +103,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// ---------------- HOME PAGE WITH FILTER TABS ----------------
   Widget _buildHomePage(BuildContext context, HomeProvider provider) {
-    // Get filtered houses directly from provider
     final filteredHouses = provider.filteredHouses;
 
     return ListView(
@@ -128,7 +130,6 @@ class HomeScreen extends StatelessWidget {
         const SearchBarWidget(),
         const SizedBox(height: 20),
 
-        /// 🔥 FILTER TAB BAR
         SizedBox(
           height: 40,
           child: ListView.builder(
@@ -155,7 +156,6 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
 
-        /// 🏠 GRID OF HOUSES
         LayoutBuilder(
           builder: (context, constraints) {
             int crossAxisCount = constraints.maxWidth > 600 ? 3 : 2;
@@ -180,7 +180,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// ---------------- NAV ITEM BUILDER ----------------
   Widget _buildNavItem(BuildContext context, int index, String icon, String label) {
     final provider = context.watch<HomeProvider>();
     return GestureDetector(

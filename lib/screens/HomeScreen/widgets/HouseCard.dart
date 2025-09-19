@@ -45,7 +45,6 @@ class HouseCard extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // Price at top-right
               Positioned(
                 top: 8,
                 right: 8,
@@ -73,7 +72,6 @@ class HouseCard extends StatelessWidget {
                 ),
               ),
 
-              // Title & location at bottom
               Positioned(
                 left: 12,
                 right: 12,

@@ -23,7 +23,7 @@ class SearchBarWidget extends StatelessWidget {
           Expanded(
             child: TextField(
               onChanged: (value) {
-                provider.setSearchQuery(value); // 👈 updates provider
+                provider.setSearchQuery(value);
               },
               decoration: InputDecoration(
                 hintText: "Search Place here",

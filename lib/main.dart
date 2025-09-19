@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
         ChangeNotifierProvider<PhotoProvider>(create: (_) => PhotoProvider()),
         ChangeNotifierProvider<HouseDetailProvider>(create: (_) => HouseDetailProvider()),
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

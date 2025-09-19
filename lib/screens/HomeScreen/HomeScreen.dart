@@ -1,183 +1,191 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:real_estate_application/screens/HomeScreen/provider/home_provider.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/FilterChipWidget.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/HouseCard.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/NavigationItem.dart';
 import 'package:real_estate_application/screens/HomeScreen/widgets/SearchBarWidget.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<Map<String, String>> houses = [
-    {
-      "title": "Georgie House",
-      "location": "Kochi, Kerala",
-      "price": "10,000/ Month",
-      "image": "assets/images/house1.jpg",
-    },
-    {
-      "title": "Max House",
-      "location": "Edappally, Kerala",
-      "price": "12,000/ Month",
-      "image": "assets/images/house2.jpg",
-    },
-    {
-      "title": "Lunia Haven",
-      "location": "Fort Kochi, Kerala",
-      "price": "30,000/ Month",
-      "image": "assets/images/house3.jpg",
-    },
-    {
-      "title": "The Serene Nest",
-      "location": "Kakkanad, Kerala",
-      "price": "20,000/ Month",
-      "image": "assets/images/house4.jpg",
-    },
-  ];
-
   HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final provider = context.watch<HomeProvider>();
+
+    // 👇 Pages controlled by bottom nav
+    final pages = [
+      _buildHomePage(context, provider),
+      Center(child: Text("Locations Page", style: GoogleFonts.poppins(fontSize: 18))),
+      Center(child: Text("Chat Page", style: GoogleFonts.poppins(fontSize: 18))),
+      Center(child: Text("Settings Page", style: GoogleFonts.poppins(fontSize: 18))),
+    ];
+
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Image.asset("assets/icons/location.png", width: 24, color: Color(0xFF364856)),
+                    SizedBox(width: 6),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xFF364856),
+                        ),
+                        child: Text(
+                          "Kochi, Keralahdkjhfkjdshkfhghghghjgjg",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 30),
+                  ],
+                ),
+              ),
+              Row(
                 children: [
-                  // Top Row
-                  _buildTopRow(),
-                  const SizedBox(height: 20),
-                  _buildTitleSection(),
-                  const SizedBox(height: 20),
-                  const SearchBarWidget(),
-                  const SizedBox(height: 20),
-                  _buildFilterChips(),
-                  const SizedBox(height: 20),
-                  _buildHouseGrid(),
+                  Image.asset("assets/icons/notification.png", width: 26, color: Color(0xFF364856)),
+                  SizedBox(width: 12),
+                  CircleAvatar(radius: 23, backgroundImage: AssetImage("assets/images/house1.jpg")),
                 ],
               ),
-            ),
+            ],
           ),
-          _buildBottomNavigationBar(),
-        ],
+        ),
+
+        body: pages[provider.selectedNavIndex], // 👈 switch by bottom nav
+
+        bottomNavigationBar: Container(
+          margin: const EdgeInsets.all(12),
+          height: 65,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(color: Colors.black26, blurRadius: 4, offset: const Offset(1, 2)),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(context, 0, "assets/icons/house.png", "Home"),
+              _buildNavItem(context, 1, "assets/icons/location-filled.png", "Locations"),
+              _buildNavItem(context, 2, "assets/icons/chat.png", "Chat"),
+              _buildNavItem(context, 3, "assets/icons/settings.png", "Settings"),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildTopRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.location_on, color: Colors.black),
-            const SizedBox(width: 6),
-            Text(
-              "Kochi, Kerala",
-              style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14),
-            ),
-          ],
-        ),
-        Row(
-          children: const [
-            Icon(Icons.notifications_none, size: 26),
-            SizedBox(width: 12),
-            CircleAvatar(radius: 18, backgroundImage: AssetImage("assets/images/profile.jpg")),
-          ],
-        ),
-      ],
-    );
-  }
+  /// ---------------- HOME PAGE WITH FILTER TABS ----------------
+  Widget _buildHomePage(BuildContext context, HomeProvider provider) {
+    // Get filtered houses directly from provider
+    final filteredHouses = provider.filteredHouses;
 
-  Widget _buildTitleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       children: [
-        Text("Discover", style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 22)),
+        Text(
+          "Discover",
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: const Color(0xFF364856),
+          ),
+        ),
         Text(
           "Your New House",
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 18),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFilterChips() {
-    return SizedBox(
-      height: 40,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          FilterChipWidget("Rental House", true),
-          FilterChipWidget("Apartment", false),
-          FilterChipWidget("Houses", false),
-          FilterChipWidget("Rooms", false),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHouseGrid() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Nearby Rental House's",
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16),
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            color: const Color(0xFF364856),
           ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: GridView.builder(
-              itemCount: houses.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+        ),
+        const SizedBox(height: 20),
+
+        const SearchBarWidget(),
+        const SizedBox(height: 20),
+
+        /// 🔥 FILTER TAB BAR
+        SizedBox(
+          height: 40,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: provider.filters.length,
+            itemBuilder: (context, index) {
+              return FilterChipWidget(
+                provider.filters[index],
+                provider.selectedFilterIndex == index,
+                () => provider.setFilterIndex(index),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        Text(
+          "Nearby ${provider.filters[provider.selectedFilterIndex]}",
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            color: const Color(0xFF364856),
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        /// 🏠 GRID OF HOUSES
+        LayoutBuilder(
+          builder: (context, constraints) {
+            int crossAxisCount = constraints.maxWidth > 600 ? 3 : 2;
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: filteredHouses.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
                 mainAxisSpacing: 14,
                 crossAxisSpacing: 14,
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                final house = houses[index];
-                return HouseCard(
-                  title: house["title"]!,
-                  location: house["location"]!,
-                  price: house["price"]!,
-                  imageUrl: house["image"]!,
-                );
+                final house = filteredHouses[index];
+                return HouseCard(model: house);
               },
-            ),
-          ),
-        ],
-      ),
+            );
+          },
+        ),
+      ],
     );
   }
 
-  Widget _buildBottomNavigationBar() {
-    return Positioned(
-      left: 16,
-      right: 16,
-      bottom: 16,
-      child: Container(
-        height: 65,
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 12, offset: Offset(0, 6))],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            NavigationItem(icon: Icons.home, label: "Home", isActive: true),
-            NavigationItem(icon: Icons.location_on, label: "Locations", isActive: false),
-            NavigationItem(icon: Icons.chat_bubble_outline, label: "Chat", isActive: false),
-            NavigationItem(icon: Icons.settings, label: "Settings", isActive: false),
-          ],
-        ),
-      ),
+  /// ---------------- NAV ITEM BUILDER ----------------
+  Widget _buildNavItem(BuildContext context, int index, String icon, String label) {
+    final provider = context.watch<HomeProvider>();
+    return GestureDetector(
+      onTap: () => provider.setNavIndex(index),
+      child: NavigationItem(icon: icon, label: label, isActive: provider.selectedNavIndex == index),
     );
   }
 }

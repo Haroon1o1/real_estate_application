@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NavigationItem extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String label;
   final bool isActive;
 
@@ -17,12 +18,17 @@ class NavigationItem extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: isActive ? Colors.blueAccent : Colors.grey),
+        Image.asset(
+          icon,
+          width: label == "Locations" ? 18 : 20,
+          color: isActive ? Color(0xFF0F66FB) : Color(0xFF364856).withValues(alpha: 0.4),
+        ),
         Text(
           label,
-          style: TextStyle(
+          style: GoogleFonts.poppins(
             fontSize: 12,
-            color: isActive ? Colors.blueAccent : Colors.grey,
+            fontWeight: isActive ? FontWeight.w500 : FontWeight.w400,
+            color: isActive ? Color(0xFF0F66FB) : Color(0xFF364856).withValues(alpha: 0.4),
           ),
         ),
       ],

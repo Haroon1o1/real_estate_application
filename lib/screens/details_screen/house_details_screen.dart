@@ -77,7 +77,7 @@ class HouseDetailScreen extends StatelessWidget {
               text: "Book now",
               press: () {},
               size: 15,
-              color: const Color.fromARGB(255, 29, 112, 255),
+              color:  Color(0xFF1D70FF),
               hasIcon: false,
             ),
           ],

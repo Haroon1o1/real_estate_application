@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:real_estate_application/models/HouseModel.dart';
 import 'package:real_estate_application/screens/photo_screen/provider/photo_provider.dart';
 import 'package:real_estate_application/screens/photo_screen/widgets/poster.dart';
 
 /// Dummy data
-final List<Map<String, dynamic>> dummyMovies = [
-  {"title": "Out door", "img": "assets/images/house1.jpg"},
-  {"title": "In Door", "img": "assets/images/house2.jpg"},
-  {"title": "Lawn", "img": "assets/images/house3.jpg"},
-  {"title": "Roof", "img": "assets/images/house4.jpg"},
-];
-
-class PhotosScreen extends StatelessWidget {
-  PhotosScreen({super.key});
+class HouseGallery extends StatelessWidget {
+  final HouseModel model;
+  HouseGallery({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final photoProvider = context.watch<PhotoProvider>();
 
+    final galleryItems = model.gallery; // [{name:..., url:...}, ...]
+
     return SafeArea(
       top: false,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: Icon(Icons.arrow_back),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.pop(context),
+          ),
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -39,60 +39,61 @@ class PhotosScreen extends StatelessWidget {
           ),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             /// Main Posters
             SizedBox(
               height: size.height * 0.7,
               child: PageView.builder(
                 controller: photoProvider.pageController,
-                physics: BouncingScrollPhysics(),
-                itemCount: dummyMovies.length,
+                physics: const BouncingScrollPhysics(),
+                itemCount: galleryItems.length,
                 itemBuilder: (context, index) {
-                  final item = dummyMovies[index];
+                  final item = galleryItems[index];
                   final value = index - photoProvider.currentPage;
                   final scale = 1 - (value.abs() * 0.1);
                   final highlight = value.abs() < 0.6;
 
                   return Transform.scale(
                     scale: scale.clamp(0.9, 1.0),
-                    child: PosterWidget(item: item, highlight: highlight),
+                    child: PosterWidget(
+                      item: {
+                        "title": item["name"],
+                        "img": item["url"], // ✅ FIXED
+                      },
+                      highlight: highlight,
+                    ),
                   );
                 },
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-            /// Thumbnails row
-            /// Thumbnails row
+            /// Thumbnails
             Center(
               child: SizedBox(
                 height: size.height * 0.1,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(dummyMovies.length, (index) {
-                      final item = dummyMovies[index];
+                    children: List.generate(galleryItems.length, (index) {
+                      final item = galleryItems[index];
                       final isSelected = index == photoProvider.currentPage.round();
 
                       return GestureDetector(
-                        onTap: () {
-                          photoProvider.jumpToPage(index);
-                        },
+                        onTap: () => photoProvider.jumpToPage(index),
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 6),
+                          margin: const EdgeInsets.symmetric(horizontal: 6),
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: AnimatedOpacity(
-                              duration: Duration(milliseconds: 300),
-                              opacity: isSelected ? 1.0 : 0.5, // highlight selected
+                              duration: const Duration(milliseconds: 300),
+                              opacity: isSelected ? 1.0 : 0.5,
                               child: Image.asset(
-                                item["img"],
+                                item["url"]!, // ✅ FIXED
                                 fit: BoxFit.cover,
                                 width: 70,
                                 height: 70,

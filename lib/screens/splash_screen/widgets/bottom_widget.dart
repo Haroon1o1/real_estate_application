@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:real_estate_application/screens/HomeScreen/HomeScreen.dart';
 import 'package:real_estate_application/screens/splash_screen/provider/Splash_provider.dart';
 import 'package:real_estate_application/screens/splash_screen/widgets/bottom_curve.dart';
 import 'package:real_estate_application/widgets/Custom_Button.dart';
 
 class SplashBottomWidget extends StatelessWidget {
   const SplashBottomWidget({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,12 @@ class SplashBottomWidget extends StatelessWidget {
                   isOutline: true,
                   textColor: Colors.black,
                   text: "Explore",
-                  press: () {},
+                  press: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
+                  },
                   size: size.width * 0.035,
                 ),
               ],

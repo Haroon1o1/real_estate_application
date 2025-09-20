@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import '../provider/house_detail_provider.dart';
 
 class PropertyTitleWidget extends StatelessWidget {
-  const PropertyTitleWidget({super.key});
+  String title, location;
+  PropertyTitleWidget({super.key, required this.location, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class PropertyTitleWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Georgie House",
+                "$title",
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: size.width * 0.055,
@@ -26,12 +27,9 @@ class PropertyTitleWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Icon(Icons.location_on, size: 18, color: Colors.red),
-                  const SizedBox(width: 4),
-                  Text(
-                    "Kochi, Kerala",
-                    style: GoogleFonts.poppins(color: Colors.grey, fontSize: 14),
-                  ),
+                  Icon(Icons.location_on, size: 18, color: Colors.red),
+                  SizedBox(width: 4),
+                  Text("$location", style: GoogleFonts.poppins(color: Colors.grey, fontSize: 14)),
                 ],
               ),
             ],
@@ -44,7 +42,7 @@ class PropertyTitleWidget extends StatelessWidget {
             return GestureDetector(
               onTap: () => provider.toggleFavorite(),
               child: Container(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(12),

@@ -4,12 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/models/HouseModel.dart';
+import 'package:real_estate_application/screens/details_screen/house_details_screen.dart';
 import 'package:real_estate_application/screens/photo_screen/photo_screen.dart';
 
 class HouseCard extends StatelessWidget {
   final HouseModel model;
 
-  HouseCard({super.key, required this.model});
+  const HouseCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class HouseCard extends StatelessWidget {
         Navigator.of(context).push(
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 400),
-            pageBuilder: (context, animation, secondaryAnimation) => HouseGallery(model: model),
+            pageBuilder: (context, animation, secondaryAnimation) => HouseDetailScreen(model: model),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               return ScaleTransition(
                 scale: CurvedAnimation(parent: animation, curve: Curves.easeInOut),

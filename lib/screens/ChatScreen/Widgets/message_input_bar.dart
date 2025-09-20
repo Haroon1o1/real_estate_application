@@ -34,7 +34,7 @@ class MessageInputBar extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.send, color: Colors.black87),
+            icon: const Icon(Icons.send, color: Color(0xFF0F66FB)),
             onPressed: () {},
           ),
         ],

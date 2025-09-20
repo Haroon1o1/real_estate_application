@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/models/HouseModel.dart';
 import 'package:real_estate_application/screens/details_screen/widgets/property_details_header_widget.dart';
 import 'package:real_estate_application/screens/details_screen/widgets/property_details_widget.dart';
 import 'package:real_estate_application/screens/details_screen/widgets/property_photos_widget.dart';
@@ -7,7 +8,8 @@ import 'package:real_estate_application/screens/details_screen/widgets/property_
 import 'package:real_estate_application/widgets/Custom_Button.dart';
 
 class HouseDetailScreen extends StatelessWidget {
-  HouseDetailScreen({super.key});
+  HouseModel model;
+  HouseDetailScreen({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,11 @@ class HouseDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back, color: Colors.black),
+        // leading: Icon(Icons.arrow_back, color: Colors.black),
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text(
-          "Georgie House Details",
+          "${model.title}",
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontWeight: FontWeight.w500,
@@ -34,9 +36,14 @@ class HouseDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PropertyDetailsHeaderWidget(),
+            PropertyDetailsHeaderWidget(
+              rent: model.rent,
+              ratings: model.ratings,
+              isVerified: model.isVerified,
+              image: model.image,
+            ),
             SizedBox(height: 16),
-            PropertyTitleWidget(),
+            PropertyTitleWidget(title: model.title, location: model.location),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +65,7 @@ class HouseDetailScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 12),
-            PropertyPhotosWidget(),
+            PropertyPhotosWidget(model: model),
 
             SizedBox(height: 20),
 
@@ -67,7 +74,7 @@ class HouseDetailScreen extends StatelessWidget {
               style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: size.width * 0.04),
             ),
             SizedBox(height: 16),
-            PropertyDetailsWidget(),
+            PropertyDetailsWidget(model: model),
             SizedBox(height: 20),
 
             /// Description
@@ -77,7 +84,7 @@ class HouseDetailScreen extends StatelessWidget {
               text: "Book now",
               press: () {},
               size: 15,
-              color:  Color(0xFF1D70FF),
+              color: Color(0xFF1D70FF),
               hasIcon: false,
             ),
           ],

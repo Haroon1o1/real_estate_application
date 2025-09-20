@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate_application/models/HouseModel.dart';
+import 'package:real_estate_application/screens/photo_screen/photo_screen.dart';
 
 class PropertyPhotosWidget extends StatelessWidget {
-  const PropertyPhotosWidget({super.key});
+  final HouseModel model;
+
+  const PropertyPhotosWidget({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: [
-          for (var i = 1; i <= 4; i++)
-            Container(
-              margin: EdgeInsets.only(right: 12),
+        itemCount: model.gallery.length,
+        itemBuilder: (context, index) {
+          final photo = model.gallery[index]["url"]; // or "path" if you name it differently
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HouseGallery(model: model)),
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 12),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  "assets/images/house$i.jpg",
-                  width: 100,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.asset(photo!, width: 100, height: 80, fit: BoxFit.cover),
               ),
             ),
-        ],
+          );
+        },
       ),
     );
   }

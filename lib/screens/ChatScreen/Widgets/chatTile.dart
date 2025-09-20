@@ -39,7 +39,7 @@ class ChatTile extends StatelessWidget {
                   Text(
                     title,
                     style: GoogleFonts.poppins(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -47,7 +47,7 @@ class ChatTile extends StatelessWidget {
                   Text(
                     subtitle,
                     style: GoogleFonts.poppins(
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
                     ),
@@ -57,15 +57,16 @@ class ChatTile extends StatelessWidget {
             ),
             if (badge.isNotEmpty)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20),
+                  shape: BoxShape.circle,
+                  color: Color(0xFF0F66FB),
+                  // borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   badge,
                   style: GoogleFonts.poppins(
-                    fontSize: 12,
+                    fontSize: 10,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),

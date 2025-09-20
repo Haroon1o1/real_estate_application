@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PropertyDetailsHeaderWidget extends StatelessWidget {
-  const PropertyDetailsHeaderWidget({super.key});
+  String rent, image;
+  double ratings;
+  bool isVerified;
+  PropertyDetailsHeaderWidget({
+    super.key,
+    required this.rent,
+    required this.ratings,
+    required this.isVerified,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +21,7 @@ class PropertyDetailsHeaderWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.asset(
-            "assets/images/house1.jpg",
+            "$image",
             height: size.height * 0.25,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -20,13 +29,16 @@ class PropertyDetailsHeaderWidget extends StatelessWidget {
         ),
 
         /// Blue check icon
-        Positioned(
-          top: 12,
-          left: 12,
-          child: Container(
-            padding: EdgeInsets.all(6),
-            decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-            child: Image.asset("assets/icons/verified.png", width: 18),
+        Visibility(
+          visible: isVerified,
+          child: Positioned(
+            top: 12,
+            left: 12,
+            child: Container(
+              padding: EdgeInsets.all(6),
+              decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+              child: Image.asset("assets/icons/verified.png", width: 18),
+            ),
           ),
         ),
 
@@ -41,7 +53,7 @@ class PropertyDetailsHeaderWidget extends StatelessWidget {
               children: [
                 Image.asset("assets/icons/star.png", width: 12),
                 SizedBox(width: 4),
-                Text("4.5", style: TextStyle(fontWeight: FontWeight.w600)),
+                Text("$ratings", style: TextStyle(fontWeight: FontWeight.w600)),
               ],
             ),
           ),
@@ -54,11 +66,11 @@ class PropertyDetailsHeaderWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0x4D606060).withValues(alpha: 0.6),
+              color: Color(0x4D606060).withValues(alpha: 0.6),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              "10,000/ Month",
+              "$rent",
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,

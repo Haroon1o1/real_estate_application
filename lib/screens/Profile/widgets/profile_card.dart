@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/widgets/Custom_Button.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({super.key});
@@ -34,13 +35,17 @@ class ProfileCard extends StatelessWidget {
               ],
             ),
           ),
-          OutlinedButton(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.black26),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          SizedBox(
+            width: 100,
+            child: CustomButton(
+              height: 40,
+              hasIcon: false,
+              textColor: Colors.white,
+              text: "Log out",
+              press: () {},
+              size: 14,
+              color: Color(0xFF0F66FB),
             ),
-            child: Text("logout", style: GoogleFonts.poppins(fontSize: 12)),
           ),
         ],
       ),

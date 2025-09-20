@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/models/HouseModel.dart';
 
 class PropertyDetailsWidget extends StatelessWidget {
-  const PropertyDetailsWidget({super.key});
+  HouseModel model;
+  PropertyDetailsWidget({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +13,12 @@ class PropertyDetailsWidget extends StatelessWidget {
         spacing: 24,
         runSpacing: 20,
         children: [
-          _buildDetail("assets/icons/room.png", "3", "Bedrooms"),
-          _buildDetail("assets/icons/bath.png", "2", "Bathrooms"),
-          _buildDetail("assets/icons/area.png", "1550", "Area (in Sqft)"),
-          _buildDetail("assets/icons/calendar.png", "2019", "Build in Year"),
-          _buildDetail("assets/icons/room.png", "2", "Living Rooms"),
-          _buildDetail("assets/icons/car.png", "2 Cars", "Parking"),
+          _buildDetail("assets/icons/room.png", "${model.bedrooms}", "Bedrooms"),
+          _buildDetail("assets/icons/bath.png", "${model.bathrooms}", "Bathrooms"),
+          _buildDetail("assets/icons/area.png", "${model.area}", "Area (in Sqft)"),
+          _buildDetail("assets/icons/calendar.png", "${model.buildYear}", "Build in Year"),
+          _buildDetail("assets/icons/room.png", "${model.livingRooms}", "Living Rooms"),
+          _buildDetail("assets/icons/car.png", "${model.garage} Cars", "Parking"),
         ],
       ),
     );

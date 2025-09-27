@@ -1,16 +1,64 @@
-# real_estate_application
+# 🏡 Dwella - Real Estate Application
 
-A new Flutter project.
+**Dwella** is a modern real estate application built with **Flutter**, designed to help users discover, explore, and book properties seamlessly. With an intuitive interface, it simplifies finding your dream home.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🖼️ Project Banner
 
-A few resources to get you started if this is your first Flutter project:
+<div align="center">
+  <img src="assets/images/dwella-banner.png" alt="Dwella Banner" width="800"/>
+</div>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ✨ Features
+
+- 🔍 **Property Discovery**
+  - Browse properties by type (rental, house, apartment, room, etc.)
+  - Filter by location, price, amenities, and more  
+
+- 🏠 **Property Details**
+  - High-quality photos & galleries
+  - Property specifications (beds, baths, area, parking, etc.)
+  - Owner/agent information  
+
+- 📅 **Booking & Scheduling**
+  - Book viewings directly in the app
+  - Track reservations & manage favorites  
+
+- 👤 **User Account**
+  - Sign up, sign in, manage personal information
+  - Save & revisit favorite listings  
+
+- 🎨 **Modern Flutter UI**
+  - Smooth navigation & elegant design
+  - Dark/light theme support  
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Flutter (Dart) |
+| Backend | Firebase |
+| Database | Firestore  |
+| Auth | Firebase Authentication |
+| State Management | Provider |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Install [Flutter SDK](https://docs.flutter.dev/get-started/install)  
+- Setup emulator / connect a device  
+- Clone this repository  
+
+### Installation
+
+```bash
+git clone https://github.com/your-username/dwella.git
+cd dwella
+flutter pub get
